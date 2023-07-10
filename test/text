@@ -1,0 +1,41 @@
+import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+public class CalculatorUserTest {
+
+    @Mock
+    private Calculator calculator;
+
+    public CalculatorUserTest() {
+        MockitoAnnotations.initMocks(this);
+    }
+
+    @Test
+    public void testCalculatorUser() {
+        // Set up the desired behavior of the calculator mock
+        when(calculator.addition(4, 5)).thenReturn(9);
+        when(calculator.subtraction(4, 5)).thenReturn(-1);
+        when(calculator.multiplication(4, 5)).thenReturn(20);
+        when(calculator.division(10, 5)).thenReturn(2);
+
+        // Create an instance of the CalculatorUser class
+        CalculatorUser calculatorUser = new CalculatorUser(calculator);
+
+        // Perform the tests
+        assertEquals(9, calculatorUser.performAddition(4, 5));
+        assertEquals(-1, calculatorUser.performSubtraction(4, 5));
+        assertEquals(20, calculatorUser.performMultiplication(4, 5));
+        assertEquals(2, calculatorUser.performDivision(10, 5));
+
+        // Verify the interactions with the calculator mock
+        verify(calculator).addition(4, 5);
+        verify(calculator).subtraction(4, 5);
+        verify(calculator).multiplication(4, 5);
+        verify(calculator).division(10, 5);
+    }
+}
